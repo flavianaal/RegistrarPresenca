@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl/>
+            <p:menubar >
+               <p:menuitem value="Home" icon="pi pi-fw pi-home" url="index.xhtml" /> 
+            </p:menubar>
+            <p:spacer height="20" />
+            <h:panelGroup id="cadastrarPresencaPanelGroup">
+               <h3>Registrar Entrada/Saida</h3>
+                    
+                <div class="row" columns="1">
+       
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Horario de Entrada: "/>
+                            <p:calendar id="horaEntrada" value="#{managerEntradaSaida.entradaSaida.horaEntrada}" pattern="HH:mm" timeOnly="true" />
+                            
+                        </div>
+                    </div>
+                    <p:spacer height="20" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Horario de Saida: "/>
+                            <p:calendar id="horaSaida" value="#{managerEntradaSaida.entradaSaida.horaSaida}" pattern="HH:mm" timeOnly="true" />
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>      
+                <center style="margin: 10px">
+                    <p:commandButton value="Salvar" actionListener="#{managerEntradaSaida.salvar()}" icon="pi pi-save" update="@form"/>
+                </center>    
+             
+                
+           
+        </h:form>
+    </h:body>
+</html>
+
+

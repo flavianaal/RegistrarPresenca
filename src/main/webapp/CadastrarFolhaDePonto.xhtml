@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Registrar Prensença</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl/>
+            <p:menubar >
+               <p:menuitem value="Home" icon="pi pi-fw pi-home" url="index.xhtml" /> 
+            </p:menubar>
+            <p:spacer height="20" />
+            <h:panelGroup id="cadastrarPresencaPanelGroup">
+                <h3>Folha De Ponto - Registrar Presença</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel for="data" value="Data: " />
+                            <p:calendar id="data" value="#{managerFolhaDePonto.folhaDePonto.data}" locale="pt_BR" pattern="dd/MM/yyyy" />
+                        </div>
+                    </div>
+                    <p:spacer height="20" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Funcionário: " />
+                            <p:autoComplete id="funcionario" value="#{managerFolhaDePonto.folhaDePonto.funcionario}"
+                                            completeMethod="#{managerFolhaDePonto.autocompleteFuncionario(nome)}"
+                                            var="funcionario" itemLabel="#{funcionario.nome}" itemValue="#{funcionario}" 
+                                            converter="funcionarioconverter" scrollHeight="250"/>
+                           
+                        </div>
+                    </div>
+                    <p:spacer height="20" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <!-- Como fazer a parte do horario de entrada e saida. -->
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </h:panelGroup>      
+            <center style="margin: 10px">
+                <p:commandButton value="Salvar" actionListener="#{managerFolhaDePonto.salvar()}" icon="pi pi-save" update="@form"/>
+            </center>    
+        </h:form>
+    </h:body>
+</html>

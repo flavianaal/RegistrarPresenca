@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      
+    <h:head>
+        <title>Registrar Presença</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl/>
+             <p:menubar >
+                <p:menuitem value="Home" icon="pi pi-fw pi-home" url="index.xhtml" /> 
+
+             </p:menubar>
+            
+                <h:panelGroup id="cadastrarFuncionarioPanelGroup">
+                    <div class="row" columns="1">
+                        <h3>Cadastrar Funcionário</h3>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p:outputLabel value="Nome do Funcionário: "/>
+                                <p:inputText value="#{managerFuncionario.funcionario.nome}"  required="true"/> 
+                            </div>
+                        </div>
+                        <p:spacer height="20" />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p:outputLabel value="Matricula: "/>
+                                <p:inputMask mask="99999" value="#{managerFuncionario.funcionario.matricula}"/>
+                            </div>
+                        </div>
+                        <p:spacer height="20" />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p:outputLabel value="Cargo: "/>
+                                <p:selectOneMenu value="#{managerFuncionario.funcionario.cargo}" converter="cargosProfissionaisConverter"  >
+                                <f:selectItem itemLabel="-- Selecione uma profissão --" itemValue="" />
+                                <f:selectItems value="#{managerFuncionario.cargosProfissionais}" var="cargo" itemLabel="#{cargo.label}" itemValue="#{cargo.value}" />
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                    </div>
+                </h:panelGroup>
+                        
+                <hr/>
+                
+                <h:panelGroup>
+                <div class="row" columns="1">
+                    <h3>Cadastrar Endereço do Funcionário</h3>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Logradouro: "/>
+                            <p:inputText value="#{managerFuncionario.funcionario.endereco.logradouro}" />
+                        </div>
+                    </div>
+                    <p:spacer height="20" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Bairro: "/>
+                            <p:inputText value="#{managerFuncionario.funcionario.endereco.bairro}" />
+                        </div>
+                    </div>
+                    <p:spacer height="20" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Número: "/>
+                            <p:inputText  value="#{managerFuncionario.funcionario.endereco.numero}" type="number" required="true" />
+                        </div>
+                    </div>
+                    <p:spacer height="20" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Estado: "/>
+                            <p:inputText value="#{managerFuncionario.funcionario.endereco.estado}" />
+                        </div>
+                    </div> 
+                    <p:spacer height="20" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel value="Cidade: "/>
+                            <p:inputText value="#{managerFuncionario.funcionario.endereco.cidade}" />
+                        </div>
+                    </div>  
+                    <p:spacer height="20" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <p:outputLabel  value="CEP: "/>
+                            <p:inputMask mask="99999-999" value="#{managerFuncionario.funcionario.endereco.CEP}" />
+                        </div>
+                    </div>  
+                </div>
+                </h:panelGroup>    
+                    
+                <hr/>
+                <center style="margin: 10px">
+                    <p:commandButton value="Salvar" actionListener="#{managerFuncionario.salvar()}" icon="pi pi-save" update="@form"/>
+                </center>    
+                
+                
+           
+        </h:form>
+    </h:body>
+</html>
+
+
