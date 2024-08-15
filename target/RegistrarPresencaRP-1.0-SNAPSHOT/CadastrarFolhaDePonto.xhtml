@@ -4,22 +4,22 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Registrar Prensença</title>
+        <title>Registrar Presença</title>
     </h:head>
     <h:body>
         <h:form>
             <p:growl/>
-            <p:menubar >
-               <p:menuitem value="Home" icon="pi pi-fw pi-home" url="index.xhtml" /> 
+            <p:menubar>
+                <p:menuitem value="Home" icon="pi pi-fw pi-home" url="index.xhtml" /> 
             </p:menubar>
             <p:spacer height="20" />
             <h:panelGroup id="cadastrarPresencaPanelGroup">
-                <h3>Folha De Ponto - Registrar Presença</h3>
+                <h4>Folha De Ponto - Registrar Presença</h4>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <p:outputLabel for="data" value="Data: " />
-                            <p:calendar id="data" value="#{managerFolhaDePonto.folhaDePonto.data}" locale="pt_BR" pattern="dd/MM/yyyy" />
+                            <p:datePicker id="data" value="#{managerFolhaDePonto.folhaDePonto.data}" monthNavigator="true" yearNavigator="true" />
                         </div>
                     </div>
                     <p:spacer height="20" />
@@ -27,25 +27,50 @@
                         <div class="form-group">
                             <p:outputLabel value="Funcionário: " />
                             <p:autoComplete id="funcionario" value="#{managerFolhaDePonto.folhaDePonto.funcionario}"
-                                            completeMethod="#{managerFolhaDePonto.autocompleteFuncionario(nome)}"
+                                            completeMethod="#{managerFolhaDePonto.autocompleteFuncionario}"
                                             var="funcionario" itemLabel="#{funcionario.nome}" itemValue="#{funcionario}" 
                                             converter="funcionarioconverter" scrollHeight="250"/>
-                           
                         </div>
                     </div>
                     <p:spacer height="20" />
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <!-- Como fazer a parte do horario de entrada e saida. -->
+                    <h4>Horário de Entrada/Saída</h4>
+                    <h:panelGroup>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p:outputLabel value="Horário de Entrada: "/>
+                                <p:datePicker id="horaEntrada" value="#{managerFolhaDePonto.entradaSaida.horaEntrada}" timeOnly="true" pattern="HH:mm" />
+                            </div>
                         </div>
-                    </div>
-                    
-                    
+                        <p:spacer height="20" />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p:outputLabel value="Horário de Saída: "/>
+                                <p:datePicker id="horaSaida" value="#{managerFolhaDePonto.entradaSaida.horaSaida}" timeOnly="true" pattern="HH:mm" />
+                            </div>
+                        </div>
+                        <br/>
+                        <p:commandButton value="Adicionar Entrada/Saída" actionListener="#{managerFolhaDePonto.adicionarEntradaSaida}" update="@form"/>
+                        <br/>
+                        <!-- Tabela para exibir entradas e saídas cadastradas -->
+                        <p:dataTable value="#{managerFolhaDePonto.entradaSaidas}" var="entradaSaida" widgetVar="entradaSaidaTable">
+                            <p:column headerText="Horário de Entrada">
+                                <h:outputText value="#{entradaSaida.horaEntrada}" />
+                            </p:column>
+                            <p:column headerText="Horário de Saída">
+                                <h:outputText value="#{entradaSaida.horaSaida}" />
+                            </p:column>
+                            <p:column headerText="Ações">
+                                <p:commandButton value="Remover" action="#{managerFolhaDePonto.remover()}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+                       
+                    </h:panelGroup>
                 </div>
-            </h:panelGroup>      
-            <center style="margin: 10px">
-                <p:commandButton value="Salvar" actionListener="#{managerFolhaDePonto.salvar()}" icon="pi pi-save" update="@form"/>
-            </center>    
+                <center style="margin: 10px">
+                <p:commandButton value="Salvar" actionListener="#{managerFolhaDePonto.salvar}" update="@form"/>
+                </center>
+            </h:panelGroup>
         </h:form>
     </h:body>
 </html>

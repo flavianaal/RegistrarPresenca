@@ -5,11 +5,10 @@
 package programe.io.Modelo;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
-
 import javax.persistence.*;
 import programe.io.generico.EntidadeGenerica;
 
@@ -30,20 +29,21 @@ public class FolhaDePonto extends EntidadeGenerica {
    
     @Temporal(TemporalType.TIMESTAMP)
     private Date data;
+    
     @ManyToOne(cascade = CascadeType.ALL)
     private Funcionario funcionario;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<EntradaSaida> entradasaida;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EntradaSaida> entradaSaidas;
 
     public FolhaDePonto() {
     }
-
-    public FolhaDePonto(Long Id, Date data, Funcionario funcionario, List<EntradaSaida> entradasaida) {
-        this.Id = Id;
+    
+    public FolhaDePonto(Long id, Date data, Funcionario funcionario, List<EntradaSaida> entradasSaidas) {
+        this.Id = id;
         this.data = data;
         this.funcionario = funcionario;
-        this.entradasaida = entradasaida;
+        this.entradaSaidas = entradasSaidas != null ? entradasSaidas : new ArrayList<>();
     }
 
     public Long getId() {
@@ -63,6 +63,7 @@ public class FolhaDePonto extends EntidadeGenerica {
     }
 
     public Funcionario getFuncionario() {
+        System.out.println(funcionario);
         return funcionario;
     }
 
@@ -70,12 +71,12 @@ public class FolhaDePonto extends EntidadeGenerica {
         this.funcionario = funcionario;
     }
 
-    public List<EntradaSaida> getEntradasaida() {
-        return entradasaida;
+    public List<EntradaSaida> getEntradasSaidas() {
+        return entradaSaidas;
     }
 
-    public void setEntradasaida(List<EntradaSaida> entradasaida) {
-        this.entradasaida = entradasaida;
+    public void setEntradasSaidas(List<EntradaSaida> entradasSaidas) {
+        this.entradaSaidas = entradasSaidas;
     }
 
     public Boolean getAtivo() {
@@ -85,14 +86,16 @@ public class FolhaDePonto extends EntidadeGenerica {
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
     }
+    
+    
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.Id);
-        hash = 37 * hash + Objects.hashCode(this.data);
-        hash = 37 * hash + Objects.hashCode(this.funcionario);
-        hash = 37 * hash + Objects.hashCode(this.entradasaida);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.Id);
+        hash = 97 * hash + Objects.hashCode(this.data);
+        hash = 97 * hash + Objects.hashCode(this.funcionario);
+        hash = 97 * hash + Objects.hashCode(this.entradaSaidas);
         return hash;
     }
 
@@ -117,13 +120,16 @@ public class FolhaDePonto extends EntidadeGenerica {
         if (!Objects.equals(this.funcionario, other.funcionario)) {
             return false;
         }
-        return Objects.equals(this.entradasaida, other.entradasaida);
+        return Objects.equals(this.entradaSaidas, other.entradaSaidas);
     }
 
     @Override
     public String toString() {
-        return "FolhaDePonto{" + "Id=" + Id + ", data=" + data + ", funcionario=" + funcionario + ", entradasaida=" + entradasaida + '}';
+        return "FolhaDePonto{" + "Id=" + Id + ", data=" + data + ", funcionario=" + funcionario + ", entradasSaidas=" + entradaSaidas + '}';
     }
+    
+    
+
 
     
 }

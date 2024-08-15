@@ -8,6 +8,8 @@ programe\io\Modelo\FolhaDePonto.class
 programe\io\Util\DateUtil.class
 aula\io\converter\CargosProfissionaisConverter.class
 programe\io\Manager\ManagerFolhaDePonto.class
+programe\io\Manager\ManagerEntradaSaida.class
+programe\io\servico\ServicoEntradaSaida.class
 programe\io\servico\ServicoFolhaDePonto.class
 programe\io\enums\CargosProfissionais.class
 programe\io\Manager\ManagerFuncionario.class

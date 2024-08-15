@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package aula.io.converter;
 
 import javax.faces.component.UIComponent;
@@ -6,11 +10,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import programe.io.Modelo.Funcionario;
 
-/**
- *
- * @author arthur
- */
-@FacesConverter(value = "funcionarioconverter", forClass = Funcionario.class ) //forClass = Funcionario.class)
+@FacesConverter(value = "funcionarioconverter", forClass = Funcionario.class)
 public class FuncionarioConverter implements Converter {
 
     @Override
@@ -27,7 +27,7 @@ public class FuncionarioConverter implements Converter {
 
         if (value instanceof Funcionario) {
 
-            Funcionario entity = (Funcionario) value;
+           Funcionario entity = (Funcionario) value;
 
             if (entity != null && entity instanceof Funcionario&& entity.getId() != null) {
                 uiComponent.getAttributes().put(entity.getId().toString(), entity);

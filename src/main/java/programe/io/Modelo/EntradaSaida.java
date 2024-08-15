@@ -6,14 +6,7 @@ package programe.io.Modelo;
 
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import programe.io.generico.EntidadeGenerica;
 
 /**
@@ -23,23 +16,29 @@ import programe.io.generico.EntidadeGenerica;
 @Entity
 @Table
 public class EntradaSaida extends EntidadeGenerica {
+
     @Id
     @SequenceGenerator(name = "seq_entradaSaida", sequenceName = "seq_entradaSaida", initialValue = 1)
     @GeneratedValue(generator = "seq_entradaSaida", strategy = GenerationType.SEQUENCE)
     private Long Id;
-    
+
     @Temporal(TemporalType.TIME)
     private Date horaEntrada;
     @Temporal(TemporalType.TIME)
     private Date horaSaida;
+    
+    @ManyToOne
+    @JoinColumn(name = "folha_de_ponto_id")
+    private FolhaDePonto folhaDePonto;
 
     public EntradaSaida() {
     }
 
-    public EntradaSaida(Long Id, Date horaEntrada, Date horaSaida) {
+    public EntradaSaida(Long Id, Date horaEntrada, Date horaSaida, FolhaDePonto folhaDePonto) {
         this.Id = Id;
         this.horaEntrada = horaEntrada;
         this.horaSaida = horaSaida;
+
     }
 
     public Long getId() {
@@ -74,12 +73,21 @@ public class EntradaSaida extends EntidadeGenerica {
         this.ativo = ativo;
     }
 
+    public FolhaDePonto getFolhaDePonto() {
+        return folhaDePonto;
+    }
+
+    public void setFolhaDePonto(FolhaDePonto folhaDePonto) {
+        this.folhaDePonto = folhaDePonto;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + Objects.hashCode(this.Id);
-        hash = 43 * hash + Objects.hashCode(this.horaEntrada);
-        hash = 43 * hash + Objects.hashCode(this.horaSaida);
+        hash = 89 * hash + Objects.hashCode(this.Id);
+        hash = 89 * hash + Objects.hashCode(this.horaEntrada);
+        hash = 89 * hash + Objects.hashCode(this.horaSaida);
+        hash = 89 * hash + Objects.hashCode(this.folhaDePonto);
         return hash;
     }
 
@@ -101,17 +109,17 @@ public class EntradaSaida extends EntidadeGenerica {
         if (!Objects.equals(this.horaEntrada, other.horaEntrada)) {
             return false;
         }
-        return Objects.equals(this.horaSaida, other.horaSaida);
+        if (!Objects.equals(this.horaSaida, other.horaSaida)) {
+            return false;
+        }
+        return Objects.equals(this.folhaDePonto, other.folhaDePonto);
     }
 
     @Override
     public String toString() {
-        return "EntradaSaida{" + "Id=" + Id + ", horaEntrada=" + horaEntrada + ", horaSaida=" + horaSaida + '}';
+        return "EntradaSaida{" + "Id=" + Id + ", horaEntrada=" + horaEntrada + ", horaSaida=" + horaSaida + ", folhaDePonto=" + folhaDePonto + '}';
     }
-    
-    
-    
+
    
-    
-    
+
 }

@@ -1,4 +1,3 @@
-
 package programe.io.servico;
 
 
@@ -7,10 +6,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import programe.io.Modelo.FolhaDePonto;
 import programe.io.Modelo.Funcionario;
 import programe.io.generico.ServicoGenerico;
-
 
 /**
  *
@@ -18,13 +17,14 @@ import programe.io.generico.ServicoGenerico;
  */
 @Stateless
 public class ServicoFolhaDePonto extends ServicoGenerico<FolhaDePonto> {
+
     @PersistenceContext
     private EntityManager entityManager;
-    
-    public ServicoFolhaDePonto(){
-       super(FolhaDePonto.class);
+
+    public ServicoFolhaDePonto() {
+        super(FolhaDePonto.class);
     }
- 
+
     @Override
     public EntityManager getEntityManager() {
         return entityManager;
@@ -35,52 +35,52 @@ public class ServicoFolhaDePonto extends ServicoGenerico<FolhaDePonto> {
         this.entityManager = entityManager;
     }
     
-    
     //pesquisar todos as folhas de pontos
-    public List<FolhaDePonto> findByAll(FolhaDePonto folhaDePonto){
-        
-        //INICIANDO A QUERY DO BANCO DE DADOS
-        String sql = "select fp from FolhaDePonto fp where ";
-                              
-        if(folhaDePonto.getData()!= null && !folhaDePonto.getData().equals("")){
-            sql += "fp.folhaDePonto like :folhaDePonto and ";
+    public List<FolhaDePonto> findByAll(FolhaDePonto folhaDePonto) {
+        StringBuilder sql = new StringBuilder("SELECT fp FROM FolhaDePonto fp WHERE fp.ativo = true");
+
+        if (folhaDePonto.getData() != null) {
+            sql.append(" AND fp.data LIKE :data");
         }
-        
-        //A CONSULTA VAI SEMPRE TRAZER OS CLIENTES ATIVOS NO BANCO DE DADOS
-        sql += "fp.ativo = true";
-        
-        //LENDO A QUERY
-        
-        Query query = getEntityManager().createQuery(sql, FolhaDePonto.class);
-        //PASSANDO OS PARAMETROS
-                                        
-        if(folhaDePonto.getData()!= null && !folhaDePonto.getData().equals("")){
-           query.setParameter("data", "%"+folhaDePonto.getData()+"%");
+
+        TypedQuery<FolhaDePonto> query = getEntityManager().createQuery(sql.toString(), FolhaDePonto.class);
+
+        if (folhaDePonto.getData() != null) {
+            query.setParameter("data", "%" + folhaDePonto.getData() + "%");
         }
-        
+
         return query.getResultList();
     }
-    
-    //AUTO COMPLITE
-    
+
     //PESQUISAR POR FUNCIONARIO
+ 
     public List<Funcionario> findFuncionario(String nome) {
-        String sql = "select f from Funcionario f where ";
+        // Início da consulta
+        String sql = "select f from Funcionario f where f.ativo = true";
 
-        if (nome != null && !nome.equals(nome)) {
-            sql += "lower(f.nome) like lower(:nome) and ";
+        // Adiciona condição de nome se o parâmetro nome não for nulo
+        if (nome != null && !nome.trim().isEmpty()) {
+            sql += " and lower(f.nome) like lower(:nome)";
         }
-        sql += "f.ativo = true ORDER BY f.nome ASC";
 
+        // Ordenação
+        sql += " ORDER BY f.nome ASC";
+
+        // Criação da query
         Query query = getEntityManager().createQuery(sql);
 
-       if (nome != null && !nome.equals(nome)){
+        // Passagem do parâmetro nome, se necessário
+        if (nome != null && !nome.trim().isEmpty()) {
             query.setParameter("nome", "%" + nome.trim() + "%");
         }
 
+        // Retorna a lista de resultados
         return query.getResultList();
     }    
-    
-    
-   
+
+    public Funcionario findFuncionarioById(Long id) {
+        return entityManager.find(Funcionario.class, id);
+    }
+
+
 }

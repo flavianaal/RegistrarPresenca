@@ -7,6 +7,7 @@ package programe.io.Modelo;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
+import org.hibernate.annotations.NaturalId;
 import programe.io.generico.EntidadeGenerica;
 
 
@@ -21,19 +22,19 @@ public class Endereco extends EntidadeGenerica {
     
     @Id
     @SequenceGenerator(name = "seq_endereco", sequenceName = "seq_endereco", initialValue = 1)
-    @GeneratedValue(generator = "seq_endereco", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "seq_endereco", strategy = GenerationType.IDENTITY)
     private Long Id;
-    @Column
+    @NaturalId
     private String logradouro;
-    @Column
+    @NaturalId
     private String numero;
-    @Column
+    @NaturalId
     private String bairro;
-    @Column
+    @NaturalId
     private String cidade;
-    @Column
+    @NaturalId
     private String Estado;
-    @Column
+    @NaturalId
     private String CEP;
 
     public Endereco() {
